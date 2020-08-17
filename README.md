@@ -12,3 +12,21 @@ Facultad de minas Unal-med
 + Mauricio Zapata Pereira
 + Ricardo José Garzón Arias
 + Salome Aristizabal Giraldo
+
+## Tecnologías
+
+Diagrama:
+    + Diagrama de procesos
+
+Generador de diagramas:
+    + bpmn.io
+
+Modo de origen:
+    + xml
+
+Lenguaje de procesado (Backend):
+    + python
+
+Front end:
+    + Tecnologías web (HTML, CSS, JAVASCRIPT)
+
