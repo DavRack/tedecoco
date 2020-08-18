@@ -16,17 +16,17 @@ Facultad de minas Unal-med
 ## Tecnologías
 
 Diagrama:
-    + Diagrama de procesos
++ Diagrama de procesos
 
 Generador de diagramas:
-    + bpmn.io
++ bpmn.io
 
 Modo de origen:
-    + xml
++ xml
 
 Lenguaje de procesado (Backend):
-    + python
++ python
 
 Front end:
-    + Tecnologías web (HTML, CSS, JAVASCRIPT)
++ Tecnologías web (HTML, CSS, JAVASCRIPT)
 
