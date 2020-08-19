@@ -1,1 +1,17 @@
- la regla principla de este comit es que el comunismo siempre fue la unica opcion
+<bpmn:textAnnotation></bpmn:textAnnotation>(un comentario) -> contenido de una tarea
+<bpmn:participant /> (un participant)-> es una ventana
+<bpmn:task></bpmn:task>(una tarea) -> dibujar en pantalla un elemento(que su nombre lo define) y el nombre de ese elemento(definido por el comentario)
+<bpmn:sequenceFlow/> -> una conexion entre un objeto y un atributo
+<bpmn:exclusiveGatewa></bpmn:exclusiveGateway>(un rombo) -> es un if 
+<bpmn:lane></bpmn:lane>(linea) -> un div en html(incluyendo su contenido)
+
+
+
+
+
+
+NOTAS DE CONSISTENCIA:
+1) NO SE PERMITE ANIDAR VENTANAS ENTRE SI 
+
+
+
