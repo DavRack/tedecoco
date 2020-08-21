@@ -1,0 +1,5 @@
+¿Para que son los archivos?
+
+runtime.txt = avisa al servidor que version de python requiere
+Procfile = avisa al servidor que archivo es el index (el principal en ejecutar)
+requirements.txt = avisa al servidor cuales dependencias necesita
