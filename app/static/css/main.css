@@ -1,0 +1,21 @@
+body {
+    background-color: #e5e5e5;
+}
+
+a{
+    color: #e5e5e5;
+    /*color: #ea5455;*/
+}
+
+.navbar-toggler{
+    background: #ea5455;
+    
+}
+
+a:hover{
+    color: #999999;
+}
+
+.nav-background{
+    background: #2d4059;
+}
