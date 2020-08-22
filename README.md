@@ -26,6 +26,7 @@ Modo de origen:
 
 Lenguaje de procesado (Backend):
 + python
++ flask (como framework web)
 
 Front end:
 + Tecnologías web (HTML, CSS, JAVASCRIPT)
