@@ -1,11 +1,24 @@
 from xml.dom import minidom
 from xml.dom.minidom import parse
 
-xmldoc = minidom.parse('Diagramas/AdoptameMIAU.bpmn')
-Ventana = xmldoc.documentElement.childNodes
-print(Ventana.item(1)._get_attributes())
-for child in Ventana:
-    child
+#leer el  xml como un DOM Element(facilita muchisimos las cosas a la hora de parsear)
+xmldoc = minidom.parse('Diagramas/AdoptameMIAU2.0.bpmn')
+#este codigo es para mostrar la cantidad de nodos hijos totales de todo el xml(en general)
+Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+#Este codigo es para encontrar todas las ventanas sin importar la cantidad
+Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+print(Ventanas[0]._get_attributes().items())
+#la idea es hacer el arbol asi
+#Arbol = {1: {'name': 'John', 'age': '27', 'sex': 'Male'},
+#          2: {'name': 'Marie', 'age': '22', 'sex': 'Female'}}
+
+#print( 'Process' in str(Ventana[1]._get_attributes().items()[0][1]))
+#listadepurada = [x.childNodes for x in  Ventana if str(x.childNodes) != '()']
+#print(listadepurada)
+
+
+# print(str(Ventana.item(1).childNodes.item(1).childNodes) != '()' condicion de que si tiene hijo
+# print(Ventana.item(1)._get_attributes().items())
 #print(xmldoc.documentElement.childNodes) obtener los hijos
 #print(xmldoc.documentElement.toprettyxml()) mostrar xml bonito
 #print(xmldoc.documentElement.toxml()) mostrar todo el xml
