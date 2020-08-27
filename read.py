@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-import xml.etree.cElementTree as et
+from xml.dom import minidom
+from xml.dom.minidom import parse
 path = "diagram/test.bpmn"
 
 # leer archivo en y guardarlo en "archivoXml"
