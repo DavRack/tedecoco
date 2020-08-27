@@ -5,9 +5,17 @@ from xml.dom.minidom import parse
 xmldoc = minidom.parse('Diagramas/AdoptameMIAU2.0.bpmn')
 #este codigo es para mostrar la cantidad de nodos hijos totales de todo el xml(en general)
 Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+print(Ventana)
 #Este codigo es para encontrar todas las ventanas sin importar la cantidad
 Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
-print(Ventanas[0]._get_attributes().items())
+Ventana1 = Ventanas[0]
+print("1")
+App = [x for x in  list(Ventana1.childNodes) if str(x.childNodes) != '()']
+print('LaneSet' in str(App[0]._get_attributes().items()[0][1]))
+#E = App.filter(lambda x: )
+Elements = [x for x in  App if 'LaneSet' in str(x._get_attributes().items()[0][1])]
+
+print(Elements) #aqui estan los nombres y id de los elementos
 #la idea es hacer el arbol asi
 #Arbol = {1: {'name': 'John', 'age': '27', 'sex': 'Male'},
 #          2: {'name': 'Marie', 'age': '22', 'sex': 'Female'}}
