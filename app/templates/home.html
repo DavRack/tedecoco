@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/871fbd5d89.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
@@ -14,7 +15,10 @@
 </head>
 
 <body>
-    {{page|safe }}
+    {{nav|safe}}
+    <div class="container row mx-auto">
+        {{page|safe }}
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
