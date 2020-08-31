@@ -3,19 +3,24 @@ from xml.dom.minidom import parse
 
 #leer el  xml como un DOM Element(facilita muchisimos las cosas a la hora de parsear)
 xmldoc = minidom.parse('Diagramas/AdoptameMIAU2.0.bpmn')
+#print(type(xmldoc.documentElement.childNodes[0]))
 #este codigo es para mostrar la cantidad de nodos hijos totales de todo el xml(en general)
 Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
-print(Ventana)
+#print(Ventana)
 #Este codigo es para encontrar todas las ventanas sin importar la cantidad
 Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
 Ventana1 = Ventanas[0]
-print("1")
+#print("1")
 App = [x for x in  list(Ventana1.childNodes) if str(x.childNodes) != '()']
-print('LaneSet' in str(App[0]._get_attributes().items()[0][1]))
+#print('LaneSet' in str(App[0]._get_attributes().items()[0][1]))
 #E = App.filter(lambda x: )
 Elements = [x for x in  App if 'LaneSet' in str(x._get_attributes().items()[0][1])]
 
-print(Elements) #aqui estan los nombres y id de los elementos
+#print(Elements[0].childNodes) #aqui estan los nombres y id de los elementosl
+lanes = [x for x in  list(Elements[0].childNodes) if str(x.childNodes) != '()']
+hijoslanes1 = lanes[0].getElementsByTagName("bpmn:flowNodeRef")
+print(hijoslanes1[0].writeXML)
+
 #la idea es hacer el arbol asi
 #Arbol = {1: {'name': 'John', 'age': '27', 'sex': 'Male'},
 #          2: {'name': 'Marie', 'age': '22', 'sex': 'Female'}}
@@ -23,6 +28,7 @@ print(Elements) #aqui estan los nombres y id de los elementos
 #print( 'Process' in str(Ventana[1]._get_attributes().items()[0][1]))
 #listadepurada = [x.childNodes for x in  Ventana if str(x.childNodes) != '()']
 #print(listadepurada)
+
 
 
 # print(str(Ventana.item(1).childNodes.item(1).childNodes) != '()' condicion de que si tiene hijo
