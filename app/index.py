@@ -2,13 +2,13 @@ from flask import Flask, render_template
 
 
 class Button:
-    def __init__(self, id, title):
+    def __init__(self, id, title, style):
         self.id = id
         self.title = title
+        self.style = style
 
     def getHtml(self):
-        return '<button class="btn btn-secondary">' + self.title + '</button>'
-
+        return '<button class="{0}">{1}</button>'.format(self.style, self.title)
 
 class Dropdown:
     def __init__(self, id, title, items):
@@ -18,20 +18,24 @@ class Dropdown:
 
     def getHtml(self):
         lista = ""
-
+        c = 0
         for i in self.items:
-            lista += '<a class="dropdown-item" href="#">'+i+'</a>'
+            lista += '<option value="{0}">{1}</option>'.format(c, i)
+            c+=1
 
         return '''
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {0}
-                    </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {1}
-                </div>
-            </div>'''.format(self.title, lista)
+            <select class="custom-select my-2 col-12 mx-auto">
+                <option selected>{0}</option>
+                {1}
+            </select>'''.format(self.title, lista)
 
+class DivTitle:
+    def __init__(self, title, style):
+        self.title = title
+        self.style = style
+
+    def getHtml(self):
+        return '<div class="{0}">{1}</div>'.format(self.style, self.title)
 
 app = Flask(__name__)
 
@@ -39,27 +43,28 @@ app = Flask(__name__)
 @app.route('/')
 def home():
 
+    # Static content
     title = "Pizzas napoles"
     navbar = '''
         <nav class="navbar navbar-expand-md nav-background">
             <div class="container"> 
-                <a class="navbar-brand mx-auto" href="/">Napoles</a> 
+                <a class="navbar-brand mx-auto k-font" href="/">Napoles</a> 
             </div>
         </nav>
     '''
 
-    pizzas = Dropdown(2, "Change pizza", [
-                      "jawayana", "shiampiñones", "Musho keso"])
-    doOrder = Button(3, "Hacer pedido")
+    # XML testing examples (this will be removed)
+    pizzas = Dropdown(0, "Change pizza", ["jawayana", "shiampiñones", "Musho keso", "zalami"])
+    doOrder = Button(1, "Hacer pedido", "btn btn-custom mx-auto k-font")
+    selectPizza = DivTitle("Por favor seleccione una picsa:" , "mx-auto h1 k-font")
 
-    items = [navbar,pizzas.getHtml(), doOrder.getHtml()]
+    items = [selectPizza, pizzas, doOrder]
 
     contenido = ""
-
     for item in items:
-        contenido += item + '\n'
+        contenido += item.getHtml() + '\n'
 
-    return render_template("home.html", title=title, page=contenido)
+    return render_template("home.html", title=title, nav=navbar, page=contenido)
 
 
 if __name__ == "__main__":
