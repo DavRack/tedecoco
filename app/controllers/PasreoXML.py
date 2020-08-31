@@ -1,8 +1,24 @@
 from xml.dom import minidom
 from xml.dom.minidom import parse
+import re
+
+
+def returnTextNode(Node):
+    """
+    Esta funcion lo que hace es retornar el texto contenido
+    en un nodo mandado como parametro 
+    ej: <bpmn:text>Ingrese el nombre del gato</bpmn:text>
+    return: Ingrese el nombre del gato
+    """
+    if type(Node) == "<class 'str'>":
+        match = re.search(r'(\>(.*)\<)', str(Node))
+    else:
+        match = re.search(r'(\>(.*)\<)', str(Node.toxml()))
+    return match.group()[1:-1]
+
 
 #leer el  xml como un DOM Element(facilita muchisimos las cosas a la hora de parsear)
-xmldoc = minidom.parse('Diagramas/AdoptameMIAU2.0.bpmn')
+xmldoc = minidom.parse('Diagramas/AdoptameMIAU.bpmn')
 #print(type(xmldoc.documentElement.childNodes[0]))
 #este codigo es para mostrar la cantidad de nodos hijos totales de todo el xml(en general)
 Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
@@ -19,7 +35,8 @@ Elements = [x for x in  App if 'LaneSet' in str(x._get_attributes().items()[0][1
 #print(Elements[0].childNodes) #aqui estan los nombres y id de los elementosl
 lanes = [x for x in  list(Elements[0].childNodes) if str(x.childNodes) != '()']
 hijoslanes1 = lanes[0].getElementsByTagName("bpmn:flowNodeRef")
-print(hijoslanes1[0].writeXML)
+
+print(returnTextNode(hijoslanes1[0]))
 
 #la idea es hacer el arbol asi
 #Arbol = {1: {'name': 'John', 'age': '27', 'sex': 'Male'},
