@@ -37,7 +37,17 @@ def returnLanes(nombreDelDiagrama):
     lanes = [x for x in  list(Elements[0].childNodes) if str(x.childNodes) != '()']
     return lanes
 
-print(returnLanes('AdoptameMIAU'))
+def getElementByNameDiagram(Nombre):
+    prueba = [ x for x in returnLanes(Nombre) if str(x.childNodes) != '()']
+    elementos = [x.childNodes for x in prueba ]
+    #este codigo me aplana una lista(convierte una lista de listas en lista)
+    elementos = [item for lista in elementos for item in lista]
+    elementos = [x.childNodes for x in elementos if str(x.childNodes) != '()']
+    elementos = [item for lista in elementos for item in lista]
+    elementos = [x.wholeText for x in elementos]
+    return elementos
+
+print(getElementByNameDiagram('AdoptameMIAU2.0'))
 
 # leer el  xml como un DOM Element(facilita muchisimos las cosas a la hora de parsear)
 # xmldoc = minidom.parse('Diagramas/AdoptameMIAU.bpmn')
