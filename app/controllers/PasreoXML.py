@@ -36,7 +36,7 @@ def returnLanes(nombreDelDiagrama):
     Elements = [x for x in  App if 'LaneSet' in str(x._get_attributes().items()[0][1])]
     lanes = [x for x in  list(Elements[0].childNodes) if str(x.childNodes) != '()']
     return lanes
-
+    
 def getElementByNameDiagram(Nombre):
     prueba = [ x for x in returnLanes(Nombre) if str(x.childNodes) != '()']
     elementos = [x.childNodes for x in prueba ]
