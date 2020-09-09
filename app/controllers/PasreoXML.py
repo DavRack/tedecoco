@@ -47,7 +47,62 @@ def getElementByNameDiagram(Nombre):
     elementos = [x.wholeText for x in elementos]
     return elementos
 
-print(getElementByNameDiagram('AdoptameMIAU2.0'))
+#print(getElementByNameDiagram('AdoptameMIAU2.0'))
+
+def returnActivity(nombreDelDiagrama):
+    """
+    Esta funcion lo que hace es retornar una lista
+    que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
+    ej: AdoptameMIAU2.0(nombre del diagrama)
+    return: [<DOM Element: bpmn:task at 0x1e24268>, 
+    <DOM Element: bpmn:task at 0x1e24340>, 
+    <DOM Element: bpmn:task at 0x1e244f0>, 
+    <DOM Element: bpmn:task at 0x1e24a00>, 
+    <DOM Element: bpmn:task at 0x1e24e38>, 
+    <DOM Element: bpmn:task at 0x1e2e028>, 
+    <DOM Element: bpmn:task at 0x1e2e148>]
+    """
+    ruta = 'Diagramas/' +nombreDelDiagrama+'.bpmn'
+    xmldoc = minidom.parse(ruta)
+    Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+    Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+    App = [x for x in  list(Ventanas[0].childNodes) if str(x.childNodes) != '()']
+    Elements = [x for x in  App if 'Activity' in str(x._get_attributes().items()[0][1])]
+    return Elements
+
+
+#Este metodo es para extraer por tublas el id ddel activity, el nombre, y los flows y datastore que tienen relacionados
+
+Lista = []
+#_get_localName me devuelve el nombre del nodo despues del bpmn:
+for i in returnActivity('AdoptameMIAU2.0'):
+    flow = [z for z in i.childNodes if str(z.childNodes) != '()' ]
+    flow = [z.childNodes for z in flow]
+    flow = [item for lista in flow for item in lista]
+    flow = [z.wholeText for z in flow if 'Text' in str(type(z)) and '\n' not in z.wholeText]
+    #print(flow)
+    other = [z for z in i.childNodes if str(z.childNodes) != '()' ]
+    other = [z.childNodes for z in other]
+    other = [item for lista in other for item in lista]
+    other = [z for z in other if 'Element' in str(type(z))]
+    if other != [] :
+        other = [z.childNodes for z in other]
+        other = [item for lista in other for item in lista]
+        other = [x.wholeText for x in other]
+    Lista.append((i.getAttribute('id'),i.getAttribute('name'),flow,other))
+print(Lista)
+
+#Lista.append((i.getAttribute('id'),i.getAttribute('name'),hola))
+#print(Lista)
+
+#print(returnActivity('AdoptameMIAU2.0')[0].getAttribute('name'))
+#mostrar el atributo id y name del bpmn:task
+#print(returnActivity('AdoptameMIAU2.0')[0]._get_attributes().items())
+
+#Intento de dicomprehension
+#a = {str(i):j for i in [1,2,3,4,5] for j in [2,4,6,8,10]}
+#print(a)
+
 
 # leer el  xml como un DOM Element(facilita muchisimos las cosas a la hora de parsear)
 # xmldoc = minidom.parse('Diagramas/AdoptameMIAU.bpmn')
