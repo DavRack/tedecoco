@@ -48,3 +48,17 @@ a:hover {
     color: #e5e5e5;
     background-color: #ea5455;
 }
+
+.radiobutton{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.darkblue{
+    background: #2d4059;
+    color: #e5e5e5;
+    margin-top: 20px;
+}
