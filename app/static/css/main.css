@@ -58,5 +58,7 @@ a:hover {
 }
 
 .darkblue{
-    background-color: #2d4059;
+    background: #2d4059;
+    color: #e5e5e5;
+    margin-top: 20px;
 }

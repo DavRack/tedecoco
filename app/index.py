@@ -18,9 +18,11 @@ class Input:
         self.style = style
 
     def getHtml(self):
-        return '''<input type=self.type class="{0}">
-            <label for="{0}">{1}</label><br>
-        '''.format(self.style, self.title)
+        return '''<div>
+                <input type="{2}" class="{0}">
+                <label for="{0}">{1}</label><br>
+            <div>
+        '''.format(self.style, self.title, self.type)
 
 
 class Dropdown:
@@ -71,15 +73,17 @@ def home():
     doOrder = Button(1, "Hacer pedido", "btn btn-custom mx-auto k-font")
     selectPizza = DivTitle("Por favor seleccione una picsa:" , "mx-auto h1 k-font")
     radio = Input(2, "Desea llevar gatos", "radio", "radiobutton")
+    checkbox = Input(3, "Desea llevar tortugas", "checkbox", "radiobutton")
+    textbox = Input(4, "Nombre", "", "radiobutton")
 
-    items = [selectPizza, pizzas, doOrder, radio]
+    items = [selectPizza, pizzas, doOrder, radio, checkbox, textbox]
 
     contenido = ""
     for item in items:
         contenido += item.getHtml() + '\n'
 
     footer = '''
-        <footer class="fixed-bottom k-font darkblue">
+        <footer class="fixed-bottom k-font nav-background whitetext">
             <div class= "container">
                 <a> Instagram </a>
                 <a> facebook </a>
