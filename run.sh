@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 app/index.py
+python app/index.py

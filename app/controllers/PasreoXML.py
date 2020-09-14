@@ -21,7 +21,7 @@ def returnLanes(nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los lanes(las divisiones de los actores)
-    ej: AdoptameMIAU2.0(nombre del diagrama)
+    ej: AdoptameMIAU3.0(nombre del diagrama)
     return: [<DOM Element: bpmn:lane at 0x3bcbbb0>,
     <DOM Element: bpmn:lane at 0x3bcbd18>,
     <DOM Element: bpmn:lane at 0x3bcbe80>,
@@ -36,7 +36,7 @@ def returnLanes(nombreDelDiagrama):
     Elements = [x for x in  App if 'LaneSet' in str(x._get_attributes().items()[0][1])]
     lanes = [x for x in  list(Elements[0].childNodes) if str(x.childNodes) != '()']
     return lanes
-    
+
 def getElementByNameDiagram(Nombre):
     prueba = [ x for x in returnLanes(Nombre) if str(x.childNodes) != '()']
     elementos = [x.childNodes for x in prueba ]
@@ -47,13 +47,13 @@ def getElementByNameDiagram(Nombre):
     elementos = [x.wholeText for x in elementos]
     return elementos
 
-#print(getElementByNameDiagram('AdoptameMIAU2.0'))
+#print(getElementByNameDiagram('AdoptameMIAU3.0'))
 
 def returnActivity(nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
-    ej: AdoptameMIAU2.0(nombre del diagrama)
+    ej: AdoptameMIAU3.0(nombre del diagrama)
     return: [<DOM Element: bpmn:task at 0x1e24268>, 
     <DOM Element: bpmn:task at 0x1e24340>, 
     <DOM Element: bpmn:task at 0x1e244f0>, 
@@ -73,9 +73,62 @@ def returnActivity(nombreDelDiagrama):
 
 #Este metodo es para extraer por tublas el id ddel activity, el nombre, y los flows y datastore que tienen relacionados
 
+def returnTextAnnotation(nombreDelDiagrama):
+    """
+    Esta funcion lo que hace es retornar una lista
+    que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
+    ej: AdoptameMIAU3.0(nombre del diagrama)
+    return: [<DOM Element: bpmn:task at 0x1e24268>, 
+    <DOM Element: bpmn:task at 0x1e24340>, 
+    <DOM Element: bpmn:task at 0x1e244f0>, 
+    <DOM Element: bpmn:task at 0x1e24a00>, 
+    <DOM Element: bpmn:task at 0x1e24e38>, 
+    <DOM Element: bpmn:task at 0x1e2e028>, 
+    <DOM Element: bpmn:task at 0x1e2e148>]
+    """
+    ruta = 'Diagramas/' +nombreDelDiagrama+'.bpmn'
+    xmldoc = minidom.parse(ruta)
+    Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+    Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+    App = [x for x in  list(Ventanas[0].childNodes) if str(x.childNodes) != '()']
+    Elements = [x for x in  App if 'TextAnnotation' in str(x._get_attributes().items()[0][1])]
+    dictionary = {
+    i.getAttribute('id'):i.childNodes[1].firstChild.nodeValue for i in Elements
+    }
+    return dictionary
+
+#print(returnTextAnnotation('AdoptameMIAU3.0'))
+
+
+def returnAssociation(nombreDelDiagrama):
+    """
+    Esta funcion lo que hace es retornar una lista
+    que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
+    ej: AdoptameMIAU3.0(nombre del diagrama)
+    return: [<DOM Element: bpmn:task at 0x1e24268>, 
+    <DOM Element: bpmn:task at 0x1e24340>, 
+    <DOM Element: bpmn:task at 0x1e244f0>, 
+    <DOM Element: bpmn:task at 0x1e24a00>, 
+    <DOM Element: bpmn:task at 0x1e24e38>, 
+    <DOM Element: bpmn:task at 0x1e2e028>, 
+    <DOM Element: bpmn:task at 0x1e2e148>]
+    """
+    ruta = 'Diagramas/' +nombreDelDiagrama+'.bpmn'
+    xmldoc = minidom.parse(ruta)
+    Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+    Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+    App = [x for x in  list(Ventanas[0].childNodes) if str(x.childNodes) != '()']
+    Elements = [x for x in  App if 'Association' in str(x._get_attributes().items()[0][1])]
+    dictionary = {
+    i.getAttribute('sourceRef'):i.getAttribute('targetRef') for i in Elements
+    }
+    return dictionary
+#print(returnAssociation('AdoptameMIAU3.0'))
+
+#obtener el valor de cada
 Lista = []
 #_get_localName me devuelve el nombre del nodo despues del bpmn:
-for i in returnActivity('AdoptameMIAU2.0'):
+for i in returnActivity('AdoptameMIAU3.0'):
     flow = [z for z in i.childNodes if str(z.childNodes) != '()' ]
     flow = [z.childNodes for z in flow]
     flow = [item for lista in flow for item in lista]
@@ -89,15 +142,44 @@ for i in returnActivity('AdoptameMIAU2.0'):
         other = [z.childNodes for z in other]
         other = [item for lista in other for item in lista]
         other = [x.wholeText for x in other]
-    Lista.append((i.getAttribute('id'),i.getAttribute('name'),flow,other))
+    texto = returnTextAnnotation('AdoptameMIAU3.0')
+    asociation = returnAssociation('AdoptameMIAU3.0')
+    Lista.append((i.getAttribute('id'),i.getAttribute('name'),texto.get((asociation.get(i.getAttribute('id')))),flow,other))
+
 print(Lista)
+
+
+def returnTextAnnotation(nombreDelDiagrama):
+    """
+    Esta funcion lo que hace es retornar una lista
+    que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
+    ej: AdoptameMIAU3.0(nombre del diagrama)
+    return: [<DOM Element: bpmn:task at 0x1e24268>, 
+    <DOM Element: bpmn:task at 0x1e24340>, 
+    <DOM Element: bpmn:task at 0x1e244f0>, 
+    <DOM Element: bpmn:task at 0x1e24a00>, 
+    <DOM Element: bpmn:task at 0x1e24e38>, 
+    <DOM Element: bpmn:task at 0x1e2e028>, 
+    <DOM Element: bpmn:task at 0x1e2e148>]
+    """
+    ruta = 'Diagramas/' +nombreDelDiagrama+'.bpmn'
+    xmldoc = minidom.parse(ruta)
+    Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+    Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+    App = [x for x in  list(Ventanas[0].childNodes) if str(x.childNodes) != '()']
+    Elements = [x for x in  App if 'TextAnnotation' in str(x._get_attributes().items()[0][1])]
+    return Elements
+#print(returnTextAnnotation('AdoptameMIAU3.0')[0].getAttribute('id')) #obtener el id
+#print(returnTextAnnotation('AdoptameMIAU3.0')[0].childNodes[1].firstChild.nodeValue)
+#obtener el valor de cada
+
 
 #Lista.append((i.getAttribute('id'),i.getAttribute('name'),hola))
 #print(Lista)
 
-#print(returnActivity('AdoptameMIAU2.0')[0].getAttribute('name'))
+#print(returnActivity('AdoptameMIAU3.0')[0].getAttribute('name'))
 #mostrar el atributo id y name del bpmn:task
-#print(returnActivity('AdoptameMIAU2.0')[0]._get_attributes().items())
+#print(returnActivity('AdoptameMIAU3.0')[0]._get_attributes().items())
 
 #Intento de dicomprehension
 #a = {str(i):j for i in [1,2,3,4,5] for j in [2,4,6,8,10]}
