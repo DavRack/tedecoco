@@ -19,10 +19,33 @@ class Input:
 
     def getHtml(self):
         return '''<div>
-                <input type="{2}" class="{0}">
+                <input type="{2}" class="{0} col-3">
                 <label for="{0}">{1}</label><br>
             <div>
         '''.format(self.style, self.title, self.type)
+
+#Hay que revisar como llega los valores del formulario desde el back y modificar
+class Form:
+    def __init__(self,title,inputs):
+        self.title = title
+        self.inputs = inputs
+
+    def getHtml(self):
+        lista = ""
+        c = 0
+        for i in self.inputs:
+            lista += '''<label for="{1}">{0}</label>
+            <input id="{1}"><br>'''.format(i[0], i[1])
+            c+=1
+
+        return '''
+            <div class="container fullwidth">
+                <form class="col-md-auto justify-content-md-center">
+                    <h1>{0}</h1>  
+                    {1}
+                </form>
+            </div>'''.format(self.title, lista)
+            
 
 
 class Dropdown:
@@ -39,7 +62,7 @@ class Dropdown:
             c+=1
 
         return '''
-            <select class="custom-select my-2 col-12 mx-auto">
+            <select class="custom-select my-2 col-6 mx-auto">
                 <option selected>{0}</option>
                 {1}
             </select>'''.format(self.title, lista)
@@ -75,18 +98,23 @@ def home():
     radio = Input(2, "Desea llevar gatos", "radio", "radiobutton")
     checkbox = Input(3, "Desea llevar tortugas", "checkbox", "radiobutton")
     textbox = Input(4, "Nombre", "", "radiobutton")
+    formulario = Form("Informacion personal", [["Nombre","name"], ["Apellido","lastname"], ["Edad","Edad"], ["Direccion","address"], ["Correo electronico", "Email"]])
 
-    items = [selectPizza, pizzas, doOrder, radio, checkbox, textbox]
+    items = [selectPizza, formulario, pizzas, radio, checkbox, textbox, doOrder]
 
     contenido = ""
     for item in items:
         contenido += item.getHtml() + '\n'
 
     footer = '''
-        <footer class="fixed-bottom k-font nav-background whitetext">
+        <footer class="fixed-bottom k-font darkblue">
             <div class= "container">
-                <a> Instagram </a>
-                <a> facebook </a>
+                <p>Contactenos: 
+                    <a> <i class="fab fa-instagram"></i> </a>
+                    <a> <i class="fab fa-facebook-square"></i> </a>
+                    <a> <i class="fab fa-linkedin"></i> </a>
+                    Todos los derechos reservados <i class="far fa-copyright"></i>
+                </p>
             </div>
         </footer>
     '''
