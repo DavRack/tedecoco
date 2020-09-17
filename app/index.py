@@ -1,123 +1,80 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import controllers.Firebase as fairbeis
+import controllers.Parseo as Parce
+from models.Button import Button
+from models.DivTitle import DivTitle
+from models.Dropdown import Dropdown
+from models.Form import Form
+from models.Input import Input
 
+navbar = '''
+    <nav class="navbar navbar-expand-md nav-background">
+        <div class="container"> 
+            <a class="navbar-brand mx-auto k-font" href="/"><i class="fas fa-pizza-slice fa-fw"></i> Napoles</a> 
+        </div>
+    </nav>
+'''
 
-class Button:
-    def __init__(self, id, title, style):
-        self.id = id
-        self.title = title
-        self.style = style
-
-    def getHtml(self):
-        return '<button class="{0}">{1}</button>'.format(self.style, self.title)
-
-class Input:
-    def __init__(self, id, title, typ, style):
-        self.id = id
-        self.title = title
-        self.type = typ
-        self.style = style
-
-    def getHtml(self):
-        return '''<div>
-                <input type="{2}" class="{0} col-3">
-                <label for="{0}">{1}</label><br>
-            <div>
-        '''.format(self.style, self.title, self.type)
-
-#Hay que revisar como llega los valores del formulario desde el back y modificar
-class Form:
-    def __init__(self,title,inputs):
-        self.title = title
-        self.inputs = inputs
-
-    def getHtml(self):
-        lista = ""
-        c = 0
-        for i in self.inputs:
-            lista += '''<label for="{1}">{0}</label>
-            <input id="{1}"><br>'''.format(i[0], i[1])
-            c+=1
-
-        return '''
-            <div class="container fullwidth">
-                <form class="col-md-auto justify-content-md-center">
-                    <h1>{0}</h1>  
-                    {1}
-                </form>
-            </div>'''.format(self.title, lista)
-            
-
-
-class Dropdown:
-    def __init__(self, id, title, items):
-        self.id = id
-        self.title = title
-        self.items = items
-
-    def getHtml(self):
-        lista = ""
-        c = 0
-        for i in self.items:
-            lista += '<option value="{0}">{1}</option>'.format(c, i)
-            c+=1
-
-        return '''
-            <select class="custom-select my-2 col-6 mx-auto">
-                <option selected>{0}</option>
-                {1}
-            </select>'''.format(self.title, lista)
-
-class DivTitle:
-    def __init__(self, title, style):
-        self.title = title
-        self.style = style
-
-    def getHtml(self):
-        return '<div class="{0}">{1}</div>'.format(self.style, self.title)
-
+footer = '''
+    <footer class="fixed-bottom k-font darkblue m-0">
+        <div class= "container">
+            <div class="row m-0 justify-content-center py-2 align-content-center">
+                <a class="mr-2"> <i class="fab fa-instagram fa-fw fa-2x"></i> </a>
+                <a> <i class="fab fa-facebook-square fa-fw fa-2x"></i> </a>
+                <a class="ml-2"> <i class="fab fa-linkedin fa-fw fa-2x"></i> </a>
+                <p class="p-0 m-0 text-right col-3 my-auto">Todos los derechos reservados <i class="far fa-copyright"></i></p>
+            </div>
+        </div>
+    </footer>
+'''
 app = Flask(__name__)
 
+@app.route('/upload', methods=["POST"])
+def upload():    
+    if request.method == "POST":
+        if request.files:
+            if(request.files['diagram'].filename != ""):
+                xmlFile = request.files['diagram']
+                #path_on_cloud = "file.bpmn"
+                #fairbeis.getStorage().child(path_on_cloud).put(xmlFile)
+                #title = str(xmlFile.filename)
+                #contenido = '''
+                #    <h1 class="k-font w-100 text-center">{0}</h1>
+                #'''.format(str(xmlFile.filename))
+
+                lanes = Parce.returnLanes(xmlFile)
+
+                contenido = ""
+                for lane in lanes:
+                    contenido += "<h1 class='k-font w-100 text-center'>"+Parce.returnTextNode(lane)+"</h1>\n"
+                title = "Lanes"
+                
+                
+                return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)      
+            else:
+                title = "Error"
+                contenido = '''
+                    <h1 class="text-center w-100 mb-3">No se seleccionó diagrama</h1>
+                    <a class="btn btn-custom mx-auto" href="/">Ir atrás</a>
+                '''
+                return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)   
+            
 
 @app.route('/')
 def home():
+    title = "Home"
 
-    # Static content
-    title = "Pizzas napoles"
-    navbar = '''
-        <nav class="navbar navbar-expand-md nav-background">
-            <div class="container"> 
-                <a class="navbar-brand mx-auto k-font" href="/">Napoles</a> 
-            </div>
-        </nav>
-    '''
+    inputTitle = DivTitle("Seleccione un diagrama: ", "mx-auto h1 k-font")
+    inputXML = Input("xml-file","custom-file col-12 mb-3","file","custom-file-input","custom-file-label", "Upload file", "diagram")
+    submitBtn = Button(1, "Enviar", "btn btn-custom k-font mx-auto")
+    formXML = Form("w-100 row m-0","/upload", "POST", "multipart/form-data", [inputXML], submitBtn, ".bpmn")
 
-    # XML testing examples (this will be removed)
-    pizzas = Dropdown(0, "Change pizza", ["jawayana", "shiampiñones", "Musho keso", "zalami"])
-    doOrder = Button(1, "Hacer pedido", "btn btn-custom mx-auto k-font")
-    selectPizza = DivTitle("Por favor seleccione una picsa:" , "mx-auto h1 k-font")
-    radio = Input(2, "Desea llevar gatos", "radio", "radiobutton")
-    checkbox = Input(3, "Desea llevar tortugas", "checkbox", "radiobutton")
-    textbox = Input(4, "Nombre", "", "radiobutton")
-    formulario = Form("Informacion personal", [["Nombre","name"], ["Apellido","lastname"], ["Edad","Edad"], ["Direccion","address"], ["Correo electronico", "Email"]])
-
-    items = [selectPizza, formulario, pizzas, radio, checkbox, textbox, doOrder]
+    items = [inputTitle, formXML]
 
     contenido = ""
     for item in items:
         contenido += item.getHtml() + '\n'
 
-    footer = '''
-        <footer class="fixed-bottom k-font darkblue">
-            <div class= "container">
-                <p>Contactenos: 
-                    <a> <i class="fab fa-instagram"></i> </a>
-                    <a> <i class="fab fa-facebook-square"></i> </a>
-                    <a> <i class="fab fa-linkedin"></i> </a>
-                    Todos los derechos reservados <i class="far fa-copyright"></i>
-                </p>
-            </div>
-        </footer>
-    '''
     return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
 
 

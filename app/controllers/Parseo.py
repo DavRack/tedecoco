@@ -18,7 +18,7 @@ def returnTextNode(Node):
     return match.group()[1:-1]
 
 
-def returnSequenceFlow(nombreDelDiagrama):
+def returnSequenceFlow(xmlFile):#nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
@@ -31,8 +31,9 @@ def returnSequenceFlow(nombreDelDiagrama):
     <DOM Element: bpmn:task at 0x1e2e028>,
     <DOM Element: bpmn:task at 0x1e2e148>]
     """
-    ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
-    xmldoc = minidom.parse(ruta)
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    xmldoc = minidom.parse(xmlFile)
     Ventana = [
         x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
     ]
@@ -44,7 +45,7 @@ def returnSequenceFlow(nombreDelDiagrama):
     return Elements
 
 
-def returnLanes(nombreDelDiagrama):
+def returnLanes(xmlFile):#nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los lanes(las divisiones de los actores)
@@ -55,8 +56,9 @@ def returnLanes(nombreDelDiagrama):
     <DOM Element: bpmn:lane at 0x3bcbfa0>,
     <DOM Element: bpmn:lane at 0x3bd7070>]
     """
-    ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
-    xmldoc = minidom.parse(ruta)
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    xmldoc = minidom.parse(xmlFile)
     Ventana = [
         x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
     ]
@@ -83,7 +85,7 @@ def getElementByNameDiagram(Nombre):
 # print(getElementByNameDiagram('AdoptameMIAU4.0'))
 
 
-def returnActivity(nombreDelDiagrama):
+def returnActivity(xmlFile):#nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
@@ -96,8 +98,9 @@ def returnActivity(nombreDelDiagrama):
     <DOM Element: bpmn:task at 0x1e2e028>,
     <DOM Element: bpmn:task at 0x1e2e148>]
     """
-    ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
-    xmldoc = minidom.parse(ruta)
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    xmldoc = minidom.parse(xmlFile)
     Ventana = [
         x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
     ]
@@ -112,7 +115,7 @@ def returnActivity(nombreDelDiagrama):
 # Este metodo es para extraer por tublas el id ddel activity, el nombre, y los flows y datastore que tienen relacionados
 
 
-def returnTextAnnotation(nombreDelDiagrama):
+def returnTextAnnotation(xmlFile):#nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
@@ -125,8 +128,9 @@ def returnTextAnnotation(nombreDelDiagrama):
     <DOM Element: bpmn:task at 0x1e2e028>,
     <DOM Element: bpmn:task at 0x1e2e148>]
     """
-    ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
-    xmldoc = minidom.parse(ruta)
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    xmldoc = minidom.parse(xmlFile)
     Ventana = [
         x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
     ]
@@ -143,7 +147,7 @@ def returnTextAnnotation(nombreDelDiagrama):
     return dictionary
 
 
-def returnAssociation(nombreDelDiagrama):
+def returnAssociation(xmlFile):#nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
@@ -156,8 +160,9 @@ def returnAssociation(nombreDelDiagrama):
     <DOM Element: bpmn:task at 0x1e2e028>,
     <DOM Element: bpmn:task at 0x1e2e148>]
     """
-    ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
-    xmldoc = minidom.parse(ruta)
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    xmldoc = minidom.parse(xmlFile)
     Ventana = [
         x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
     ]
@@ -180,11 +185,11 @@ def returnAssociation(nombreDelDiagrama):
 # print(returnAssociation('AdoptameMIAU4.0'))
 
 
-def returnActivityElements(nombreDelDiagrama):
+def returnActivityElements(xmlFile):#nombreDelDiagrama):
     # obtener el valor de cada
     Dic = {}
     # _get_localName me devuelve el nombre del nodo despues del bpmn:
-    for i in returnActivity(nombreDelDiagrama):
+    for i in returnActivity(xmlFile):#nombreDelDiagrama):
         flow = [z for z in i.childNodes if str(z.childNodes) != "()"]
         flow = [z.childNodes for z in flow]
         flow = [item for lista in flow for item in lista]
@@ -202,8 +207,8 @@ def returnActivityElements(nombreDelDiagrama):
             other = [z.childNodes for z in other]
             other = [item for lista in other for item in lista]
             other = [x.wholeText for x in other]
-        texto = returnTextAnnotation(nombreDelDiagrama)
-        asociation = returnAssociation(nombreDelDiagrama)
+        texto = returnTextAnnotation(xmlFile)#nombreDelDiagrama)
+        asociation = returnAssociation(xmlFile)#nombreDelDiagrama)
 
         Dic[i.getAttribute("id")] = [
             i.getAttribute("name"),
@@ -218,20 +223,20 @@ def returnActivityElements(nombreDelDiagrama):
 # print(returnActivityElements('AdoptameMIAU4.0'))
 
 # codigo que me devuelve los elementos de cada lane
-def returnLanesWithElementsSorted(nombreDelDiagrama):
-    lista = [x.childNodes for x in returnLanes(nombreDelDiagrama)]
+def returnLanesWithElementsSorted(xmlFile):#nombreDelDiagrama):
+    lista = [x.childNodes for x in returnLanes(xmlFile)]#nombreDelDiagrama)]
     listao = []
     Dic = {}
     for i in lista:
         a = [x for x in i if str(x.childNodes) != "()"]
         listao.append([x.firstChild.nodeValue for x in a])
     for i in range(0, len(listao)):
-        listao[i].insert(0, returnLanes(nombreDelDiagrama)[i].getAttribute("id"))
+        listao[i].insert(0, returnLanes(xmlFile)[i].getAttribute("id"))#nombreDelDiagrama)[i].getAttribute("id"))
     Dic = {j: i[0] for i in listao for j in i}
     # diccionaro que me dice a que lane pertenece cada elemento por su ID
     secuencia = [
         [x.getAttribute("sourceRef"), x.getAttribute("targetRef")]
-        for x in returnSequenceFlow(nombreDelDiagrama)
+        for x in returnSequenceFlow(xmlFile)#nombreDelDiagrama)
     ]
     secuencias = [item for lista in secuencia for item in lista if "Activity" in item]
     Fernan = []
@@ -273,8 +278,8 @@ def returnLanesWithElementsSorted(nombreDelDiagrama):
 
 
 # ahora por ejemplo si queremos saber que elementos tiene al activity de la linea 1:
-for i in returnLanesWithElementsSorted('AdoptameMIAU4.0').get('Linea 5'):
-    print(returnActivityElements('AdoptameMIAU4.0').get(i))
+#for i in returnLanesWithElementsSorted('AdoptameMIAU4.0').get('Linea 5'):
+#    print(returnActivityElements('AdoptameMIAU4.0').get(i))
 
 # print(Fernan)
 # elminina elementos repetidos de una lista
@@ -287,7 +292,7 @@ for i in returnLanesWithElementsSorted('AdoptameMIAU4.0').get('Linea 5'):
 # print(returnActivityElements("AdoptameMIAU4.0"))
 
 
-def returnTextAnnotation(nombreDelDiagrama):
+def returnTextAnnotation(xmlFile):#nombreDelDiagrama):
     """
     Esta funcion lo que hace es retornar una lista
     que tiene los task(el simbolo actividad que es un rectangulo con bordes redondeados)
@@ -300,8 +305,9 @@ def returnTextAnnotation(nombreDelDiagrama):
     <DOM Element: bpmn:task at 0x1e2e028>,
     <DOM Element: bpmn:task at 0x1e2e148>]
     """
-    ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
-    xmldoc = minidom.parse(ruta)
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    xmldoc = minidom.parse(xmlFile)
     Ventana = [
         x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
     ]
