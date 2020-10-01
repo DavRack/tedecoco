@@ -6,6 +6,8 @@ from models.DivTitle import DivTitle
 from models.Dropdown import Dropdown
 from models.Form import Form
 from models.Input import Input
+from models.Tooltip import Tooltip as TP
+import re
 
 navbar = '''
     <nav class="navbar navbar-expand-md nav-background">
@@ -42,21 +44,36 @@ def upload():
                 #    <h1 class="k-font w-100 text-center">{0}</h1>
                 #'''.format(str(xmlFile.filename))
 
-                lanes = Parce.returnLanes(xmlFile)
+                title = xmlFile.filename
 
-                contenido = ""
-                for lane in lanes:
-                    contenido += "<h1 class='k-font w-100 text-center'>"+Parce.returnTextNode(lane)+"</h1>\n"
-                title = "Lanes"
+                if re.findall(r"\.{1}bpmn$", title):
+                    # En esta área se interpreta el XML
                 
-                
-                return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)      
+                    lanes = Parce.returnLanes(xmlFile)
+
+                    contenido = ""
+                    
+                    for lane in lanes:
+                        contenido += "<h1 class='k-font w-100 text-center'>"+Parce.returnTextNode(lane)+"</h1>\n"
+                    
+                    return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
+                else:
+                    title = "Error"
+
+                    contenido = '''
+                        <h1 class="text-center w-100 mb-3">El archivo no es un diagrama BPMN</h1>
+                        <a class="btn btn-custom mx-auto" href="/">Ir atrás</a>
+                    '''
+
+                    return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
             else:
                 title = "Error"
+
                 contenido = '''
                     <h1 class="text-center w-100 mb-3">No se seleccionó diagrama</h1>
                     <a class="btn btn-custom mx-auto" href="/">Ir atrás</a>
                 '''
+
                 return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)   
             
 
@@ -66,8 +83,10 @@ def home():
 
     inputTitle = DivTitle("Seleccione un diagrama: ", "mx-auto h1 k-font")
     inputXML = Input("xml-file","custom-file col-12 mb-3","file","custom-file-input","custom-file-label", "Upload file", "diagram")
-    submitBtn = Button(1, "Enviar", "btn btn-custom k-font mx-auto")
-    formXML = Form("w-100 row m-0","/upload", "POST", "multipart/form-data", [inputXML], submitBtn, ".bpmn")
+    submitBtn = Button(1, "Enviar", "btn btn-custom k-font")
+    tooltip = TP("1","text-center d-flex align-items-center","fas fa-info-circle fa-fw fa-2x", "bottom", "Only .bpmn extensions","")
+    formXML = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", [inputXML, tooltip], submitBtn, ".bpmn")
+    
 
     items = [inputTitle, formXML]
 
