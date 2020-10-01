@@ -7,11 +7,11 @@
 }
 
 body {
-    background-color: #e5e5e599;
+    background-color: #ffeba044 ;
 }
 
 a {
-    color: #e5e5e5;
+    color: white;
     /*color: #ea5455;*/
 }
 
@@ -23,34 +23,30 @@ a {
     font-family: 'Reem Kufi';
 }
 
-.navbar-toggler {
-    background: #ea5455;
-}
-
 a:hover {
     color: white;
     transition: .1s;
 }
 
 .nav-background {
-    background: #ea5455;
+    background: #c44b27;
     margin-bottom: 20px;
 }
 
 .btn-custom{
-    color: #e5e5e5;
-    background-color: #ea5455dd;
+    color: white;
+    background-color: #e0a656dd;
 }
 
 .btn-custom:hover{
-    color: #e5e5e5;
-    background-color: #ea5455;
+    color: white;
+    background-color: #e0a656;
     transition: .3s;
 }
 
 .darkblue{
-    background: #2d4059;
-    color: #e5e5e5;
+    background: #c44b27;
+    color: white;
 }
 
 i{
