@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from flask import Flask, render_template
 
 
@@ -75,6 +76,39 @@ class DivTitle:
     def getHtml(self):
         return '<div class="{0}">{1}</div>'.format(self.style, self.title)
 
+=======
+from flask import Flask, render_template, request
+#import controllers.Firebase as fairbeis
+import controllers.Parseo as Parce
+from models.Button import Button
+from models.DivTitle import DivTitle
+from models.Dropdown import Dropdown
+from models.Form import Form
+from models.Input import Input
+from models.Tooltip import Tooltip as TP
+import re
+
+navbar = '''
+    <nav class="navbar navbar-expand-md nav-background">
+        <div class="container"> 
+            <a class="navbar-brand mx-auto k-font" href="/"><i class="fas fa-pizza-slice fa-fw"></i> Sopas</a> 
+        </div>
+    </nav>
+'''
+
+footer = '''
+    <footer class="fixed-bottom k-font darkblue m-0">
+        <div class= "container">
+            <div class="row m-0 justify-content-center py-2 align-content-center">
+                <a class="mr-2"> <i class="fab fa-instagram fa-fw fa-2x"></i> </a>
+                <a> <i class="fab fa-facebook-square fa-fw fa-2x"></i> </a>
+                <a class="ml-2"> <i class="fab fa-linkedin fa-fw fa-2x"></i> </a>
+                <p class="p-0 m-0 text-right col-3 my-auto">Todos los derechos reservados <i class="far fa-copyright"></i></p>
+            </div>
+        </div>
+    </footer>
+'''
+>>>>>>> Stashed changes
 app = Flask(__name__)
 
 

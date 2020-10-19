@@ -71,7 +71,75 @@ def returnActivity(nombreDelDiagrama):
     return Elements
 
 
+def returnAssociation(nombreDelDiagrama):
+    """
+    Esta funcion lo que hace es retornar una lista
+    que tiene las asociaciones (las flechas punteadas que unen los cuadros de texto con
+    los rectangulo con bordes redondeados y que contienen los valores que tendran estos)
+    ej: AdoptameMIAU2.0(nombre del diagrama)
+    return: [<DOM Element: bpmn:association at 0x25b9b82eee0>,
+    <DOM Element: bpmn:association at 0x25b9b82ef70>, 
+    <DOM Element: bpmn:association at 0x25b9b836040>, 
+    <DOM Element: bpmn:association at 0x25b9b8360d0>, 
+    <DOM Element: bpmn:association at 0x25b9b836160>, 
+    <DOM Element: bpmn:association at 0x25b9b8361f0>, 
+    <DOM Element: bpmn:association at 0x25b9b836280>, 
+    <DOM Element: bpmn:association at 0x25b9b836310>, 
+    <DOM Element: bpmn:association at 0x25b9b8363a0>, 
+    <DOM Element: bpmn:association at 0x25b9b836430>, 
+    <DOM Element: bpmn:association at 0x25b9b8364c0>, 
+    <DOM Element: bpmn:association at 0x25b9b836550>]
+    """
+    #<bpmn:association id="Association_1f75n06" sourceRef="Activity_0dq754b" targetRef="TextAnnotation_1qotox9" />
+    ruta = 'Diagramas/' +nombreDelDiagrama+'.bpmn'
+    xmldoc = minidom.parse(ruta)
+    Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+    Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+    App = [x for x in  list(Ventanas[0].childNodes) if str(x.childNodes) != '()']
+    Associations = [x for x in  App if 'Association' in str(x._get_attributes().items()[0][1])]
+    return Associations
+
+#textAnnotation
+
+
+def returnAnnotation(nombreDelDiagrama):
+    """
+    Esta funcion lo que hace es retornar una lista
+    que tiene las asociaciones (las flechas punteadas que unen los cuadros de texto con
+    los rectangulo con bordes redondeados y que contienen los valores que tendran estos)
+    ej: AdoptameMIAU2.0(nombre del diagrama)
+    return: [<DOM Element: bpmn:textAnnotation at 0x1f166b6caf0>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b6cc10>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b6cd30>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b6ce50>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b6cf70>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b790d0>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b791f0>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b79310>, 
+    <DOM Element: bpmn:textAnnotation at 0x1f166b79430>]
+    """
+    #<bpmn:association id="Association_1f75n06" sourceRef="Activity_0dq754b" targetRef="TextAnnotation_1qotox9" />
+    ruta = 'Diagramas/' +nombreDelDiagrama+'.bpmn'
+    xmldoc = minidom.parse(ruta)
+    Ventana = [x for x in  list(xmldoc.documentElement.childNodes) if str(x.childNodes) != '()']
+    Ventanas = [x for x in Ventana if 'Process' in str(x._get_attributes().items()[0][1])]
+    App = [x for x in  list(Ventanas[0].childNodes) if str(x.childNodes) != '()']
+    Annotations = [x for x in  App if 'TextAnnotation' in str(x._get_attributes().items()[0][1])]
+    return Annotations
+
+#print(returnAnnotation('AdoptameMIAU2.0'))
+annot = []
+for i in returnAnnotation('AdoptameMIAU2.0'):
+    annot.append([returnTextNode(i),i.getAttribute('id')])
+
+#print(annot)
+
 #Este metodo es para extraer por tublas el id ddel activity, el nombre, y los flows y datastore que tienen relacionados
+asoc = []
+for i in returnAssociation('AdoptameMIAU2.0'):
+    asoc.append(i._get_attributes().items())
+
+#print(asoc)
 
 Lista = []
 #_get_localName me devuelve el nombre del nodo despues del bpmn:
@@ -89,8 +157,42 @@ for i in returnActivity('AdoptameMIAU2.0'):
         other = [z.childNodes for z in other]
         other = [item for lista in other for item in lista]
         other = [x.wholeText for x in other]
-    Lista.append((i.getAttribute('id'),i.getAttribute('name'),flow,other))
+    Lista.append([i.getAttribute('id'),i.getAttribute('name'),flow,other])
 print(Lista)
+
+
+
+for i in range (0,len(Lista)):
+    for j in asoc:
+        if (Lista[i][0]==j[1][1]):
+            for a in annot:
+                if (j[2][1]==a[1]):
+                    Lista[i].append(j[2][1])
+                    Lista[i].append(a[0])
+print(Lista)
+
+#for i in returnActivity('AdoptameMIAU2.0'):
+#    flow = [z for z in i.childNodes if str(z.childNodes) != '()' ]
+#    flow = [z.childNodes for z in flow]
+#    flow = [item for lista in flow for item in lista]
+#    flow = [z.wholeText for z in flow if 'Text' in str(type(z)) and '\n' not in z.wholeText]
+    #print(flow)
+#    other = [z for z in i.childNodes if str(z.childNodes) != '()' ]
+#    other = [z.childNodes for z in other]
+#    other = [item for lista in other for item in lista]
+#    other = [z for z in other if 'Element' in str(type(z))]
+#    if other != [] :
+#        other = [z.childNodes for z in other]
+#        other = [item for lista in other for item in lista]
+#        other = [x.wholeText for x in other]
+#    for j in asoc:
+#        if (i.getAttribute('id')==j[1][1]):
+#            Lista.append((i.getAttribute('id'),i.getAttribute('name'),flow,other,j[2][1]))
+#        else:
+#            Lista.append([i.getAttribute('id'),i.getAttribute('name'),flow,other])
+#print(Lista)
+
+#print(asoc)
 
 #Lista.append((i.getAttribute('id'),i.getAttribute('name'),hola))
 #print(Lista)
