@@ -7,11 +7,11 @@
 }
 
 body {
-    background-color: #e5e5e5;
+    background-color: #ffeba044 ;
 }
 
 a {
-    color: #e5e5e5;
+    color: white;
     /*color: #ea5455;*/
 }
 
@@ -23,39 +23,33 @@ a {
     font-family: 'Reem Kufi';
 }
 
-.navbar-toggler {
-    background: #ea5455;
-}
-
 a:hover {
-    color: #ea5455;
-    transition: .3s;
+    color: white;
+    transition: .1s;
 }
 
 .nav-background {
-    background: #2d4059;
+    background: #c44b27;
     margin-bottom: 20px;
 }
 
-.btn-custom {
-    border-radius: 20px;
-    border: 2px solid #ea5455;
-    color: #ea5455;
-    background-color: #e5e5e5;
-    transition: .3s;
+.btn-custom{
+    color: white;
+    background-color: #e0a656dd;
 }
+
 .btn-custom:hover{
-    color: #e5e5e5;
-    background-color: #ea5455;
+    color: white;
+    background-color: #e0a656;
+    transition: .3s;
 }
 
 .darkblue{
-    background: #2d4059;
-    padding: 2px;
-    color: #e5e5e5;
-    margin-top: 20px;
+    background: #c44b27;
+    color: white;
 }
 
 i{
-    padding-left: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
 }

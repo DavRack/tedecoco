@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -18,7 +17,7 @@
 <body>
     {{nav|safe}}
     <div class="container row mx-auto">
-        {{page|safe }}
+        <h1>{{success}}</h1>
     </div>
     {{foot|safe}}
 
@@ -33,9 +32,6 @@
         crossorigin="anonymous"></script>
     <script>
         FontAwesomeConfig = { autoReplaceSvg: 'nest' }
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
     </script>
 </body>
 
