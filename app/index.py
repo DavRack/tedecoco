@@ -37,6 +37,7 @@ def upload():
         if request.files:
             if(request.files['diagram'].filename != ""):
                 xmlFile = request.files['diagram']
+                print(xmlFile)
                 #path_on_cloud = "file.bpmn"
                 #fairbeis.getStorage().child(path_on_cloud).put(xmlFile)
                 #title = str(xmlFile.filename)
@@ -48,13 +49,18 @@ def upload():
 
                 if re.findall(r"\.{1}bpmn$", title):
                     # En esta área se interpreta el XML
-                
-                    lanes = Parce.returnLanes(xmlFile)
+                    #texto = Parce.returnTextAnnotation(xmlFile)
+                    #text = Parce.returnTextAnnotation(xmlFile)
+                    #asociation = Parce.returnAssociation(xmlFile)
+                    dic=Parce.returnActivityElements(xmlFile)
+                    #lanes = Parce.returnLanes(xmlFile) 
 
                     contenido = ""
                     
-                    for lane in lanes:
-                        contenido += "<h1 class='k-font w-100 text-center'>"+Parce.returnTextNode(lane)+"</h1>\n"
+                    for te in dic:
+                        contenido += "<h1 class='k-font w-100 text-center'>"+str(dic[te])+"</h1>\n"
+                    #for lane in lanes:
+                    #    contenido += "<h1 class='k-font w-100 text-center'>"+Parce.returnTextNode(lane)+"</h1>\n"
                     
                     return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
                 else:
