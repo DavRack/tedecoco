@@ -61,26 +61,61 @@ def upload():
                     #text = Parce.returnTextAnnotation(xmlFile)
                     #asociation = Parce.returnAssociation(xmlFile)
                     dic=Parce.returnActivityElements(xmlFile)
+                    #print(dic)
                     #lanes = Parce.returnLanes(xmlFile) 
                     items = []
                     contenido = ""
+
                     for d in dic:
-                        print(dic[d][0])
-                        if ("Boton" in dic[d][0]):
-                            items.append(Button(1,dic[d][1],"btn btn-custom k-font"))
-                        elif ("Textbox" in dic[d][0]):
-                            items.append(Input("id","col-12 mb-3","input","input",dic[d][1], dic[d][1],dic[d][1]))
-                        elif ("Radio" in dic[d][0]):
-                            items.append(Input("id","col-12 mb-3","radio","radio",dic[d][1], dic[d][1],dic[d][1]))
-                        elif ("Desplegable" in dic[d][0]):
-                            l = list(dic[d][1].split(","))
-                            items.append(Dropdown(1,l[0],l))
-                        elif ("Titulo" in dic[d][0]):
-                            items.append(DivTitle(dic[d][1],"mx-auto h1 k-font"))
-                        elif ("Navbar" in dic[d][0]):
-                            navbar= (Navbar("fas fa-paw",dic[d][1])).getHtml()
+                        aux = []
+                        for i in dic[d]:
+                            #formXML = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", [inputXML, tooltip], submitBtn, ".bpmn")
+                            if ("Boton" in i[0]):
+                                #aux.append(Button(1,i[1],"btn btn-custom k-font"))
+                                if (len(dic[d])==1):
+                                    aux.append(Button(1,i[1],"btn btn-custom k-font"))
+                                else:
+                                    submitBtn = Button(1, i[1], "btn btn-custom k-font")
+                            elif ("Textbox" in i[0]):
+                                aux.append(Input("id","col-12 mb-3","input","input",i[1], i[1],i[1]))
+                            elif ("Radio" in i[0]):
+                                aux.append(Input("id","col-12 mb-3","radio","radio",i[1], i[1], i[1]))
+                            elif ("Desplegable" in i[0]):
+                                l = list(i[1].split(","))
+                                aux.append(Dropdown(1,l[0],l))
+                            elif ("Titulo" in i[0]):
+                                aux.append(DivTitle(i[1],"mx-auto h1 k-font"))
+                            elif ("Navbar" in i[0]):
+                                navbar= (Navbar("fas fa-paw",i[1])).getHtml()
+                            else:
+                                print(3)
+                        if (len(dic[d])==1):
+                            for i in aux:
+                                items.append(i)
                         else:
-                            print(3)
+                            #submitBtn = Button(1,"enviar", "btn btn-custom k-font")
+                            formu = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", aux, submitBtn, ".*")
+                            items.append(formu)
+
+                    '''for d in dic:
+                        for i in dic[d]:
+                            #formXML = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", [inputXML, tooltip], submitBtn, ".bpmn")
+                            if ("Boton" in i[0]):
+                                items.append(Button(1,i[1],"btn btn-custom k-font"))
+                            elif ("Textbox" in i[0]):
+                                items.append(Input("id","col-12 mb-3","input","input",i[1], i[1],i[1]))
+                            elif ("Radio" in i[0]):
+                                items.append(Input("id","col-12 mb-3","radio","radio",i[1], i[1], i[1]))
+                            elif ("Desplegable" in i[0]):
+                                l = list(i[1].split(","))
+                                items.append(Dropdown(1,l[0],l))
+                            elif ("Titulo" in i[0]):
+                                items.append(DivTitle(i[1],"mx-auto h1 k-font"))
+                            elif ("Navbar" in i[0]):
+                                navbar= (Navbar("fas fa-paw",i[1])).getHtml()
+                            else:
+                                print(3)
+                    '''
 
                     for item in items:
                         contenido += item.getHtml() + '\n'
@@ -96,6 +131,14 @@ def upload():
                 else:
                     title = "Error"
 
+                    navbar = '''
+                        <nav class="navbar navbar-expand-md nav-background">
+                            <div class="container"> 
+                                <a class="navbar-brand mx-auto k-font" href="/"><i class="fas fa-pizza-slice fa-fw"></i> Napoles</a> 
+                            </div>
+                        </nav>
+                    '''
+
                     contenido = '''
                         <h1 class="text-center w-100 mb-3">El archivo no es un diagrama BPMN</h1>
                         <a class="btn btn-custom mx-auto" href="/">Ir atrás</a>
@@ -104,6 +147,14 @@ def upload():
                     return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
             else:
                 title = "Error"
+
+                navbar = '''
+                    <nav class="navbar navbar-expand-md nav-background">
+                        <div class="container"> 
+                            <a class="navbar-brand mx-auto k-font" href="/"><i class="fas fa-pizza-slice fa-fw"></i> Napoles</a> 
+                        </div>
+                    </nav>
+                '''
 
                 contenido = '''
                     <h1 class="text-center w-100 mb-3">No se seleccionó diagrama</h1>
