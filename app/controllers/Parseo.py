@@ -199,12 +199,17 @@ def returnLanesWithElementsSorted(xmldoc):#nombreDelDiagrama):
     Fernan = []
     acumulador = ""
     for i in secuencia:
-        if Fernan == []:
+        #if ("Activity" in i[0] and i[0] not in Fernan):
+        #    Fernan.append(i[0])
+        if ("Activity" in i[1]):
             Fernan.append(i[1])
-            acumulador = i[1]
-        elif i[0] == acumulador and "Activity" in i[0] and "Activity" in i[1]:
-            Fernan.append(i[1])
-            acumulador = i[1]
+    #for i in secuencia:
+    #   if Fernan == []:
+    #       Fernan.append(i[1])
+    #       acumulador = i[1]
+    #   elif i[0] == acumulador and "Activity" in i[0] and "Activity" in i[1]:
+    #       Fernan.append(i[1])
+    #       acumulador = i[1]
     #print(Fernan)
     Elementoos = []
     acumulador = ""
