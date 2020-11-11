@@ -102,7 +102,7 @@ def returnTextAnnotation(xmldoc):#nombreDelDiagrama):
     dictionary = {
         i.getAttribute("id"): i.childNodes[1].firstChild.nodeValue for i in Elements
     }
-    
+    #print(dictionary)
     return dictionary
 
 
@@ -159,7 +159,25 @@ def returnActivity(xmldoc):#nombreDelDiagrama):
     ]
     App = [x for x in list(Ventanas[0].childNodes) if str(x.childNodes) != "()"]
     Elements = [x for x in App if "Activity" in str(x._get_attributes().items()[0][1])]
+    #print(Elements)
     return Elements
+
+def returnDataStore(xmldoc):#nombreDelDiagrama):
+    #ruta = "Diagramas/" + nombreDelDiagrama + ".bpmn"
+    #xmldoc = minidom.parse(ruta)
+    Ventana = [
+        x for x in list(xmldoc.documentElement.childNodes) if str(x.childNodes) != "()"
+    ]
+    Ventanas = [
+        x for x in Ventana if "Process" in str(x._get_attributes().items()[0][1])
+    ]
+    App = [x for x in list(Ventanas[0].childNodes) if str(x.childNodes) != "()"]
+    #print(App)
+    Elements = [x for x in App if "dataStoreReference" in str(x)]
+    dictionary = {
+        i.getAttribute("id"): i.getAttribute("name") for i in Elements
+    }
+    return dictionary
 
 
 def getElementByNameDiagram(Nombre):
@@ -267,6 +285,7 @@ def returnActivityElements(xmlFile):#nombreDelDiagrama):
     # obtener el valor de cada
     xmldoc = minidom.parse(xmlFile)
     Dic = {}
+    
     # _get_localName me devuelve el nombre del nodo despues del bpmn:
     for i in returnActivity(xmldoc):#nombreDelDiagrama):
         flow = [z for z in i.childNodes if str(z.childNodes) != "()"]
@@ -289,23 +308,30 @@ def returnActivityElements(xmlFile):#nombreDelDiagrama):
         texto = returnTextAnnotation(xmldoc)#nombreDelDiagrama)
         asociation = returnAssociation(xmldoc)#nombreDelDiagrama)
         lanes = returnLanesWithElementsSorted(xmldoc)
+        dataStore = returnDataStore(xmldoc)
+        other2 = []
+        #data = dataStore.items()
+        for a in other:
+            other2.append(dataStore[a])
 
         Dic[i.getAttribute("id")] = [
             i.getAttribute("name"),
             texto.get((asociation.get(i.getAttribute("id")))),
             flow,
-            other,
+            other2,
         ]
     #print(Dic)
 
     #print(lanes)
     organized = order(lanes,Dic)
         # aca devuelvo un diccionaro para acceder mas eficiente a los datos(por activityID).
+    #return organized
     return organized
 
 
 #print(returnLanesWithElementsSorted('./Diagramas/AdoptameMIAU4.0.bpmn'))
 #print(returnActivityElements('./Diagramas/AdoptameMIAU4.0.bpmn'))
 #print(returnActivityElements('./Diagramas/formulario.bpmn'))
+#print(returnActivityElements('./Diagramas/formM.bpmn'))
 # Este metodo es para extraer por tublas el id ddel activity, el nombre, y los flows y datastore que tienen relacionados
 

@@ -147,7 +147,7 @@
     <bpmn:sequenceFlow id="Flow_0jyoe2z" sourceRef="Activity_06djsti" targetRef="Activity_066vv4e" />
     <bpmn:sequenceFlow id="Flow_12ennli" sourceRef="Activity_066vv4e" targetRef="Activity_15dskde" />
     <bpmn:textAnnotation id="TextAnnotation_1qotox9">
-      <bpmn:text>Gaticos Lindos</bpmn:text>
+      <bpmn:text>Perritos Lindos</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_1r30pm1">
       <bpmn:text>Persa,bengala,leon,mainecoon,munchkin,tigre,kiames,lykoi</bpmn:text>

@@ -14,3 +14,4 @@ class Input:
                 <label class="{4}" for="{3}">{5}</label>
             </div>
         '''.format(self.divClass, self.inputType, self.inputClass, self.id, self.labelClass, self.title, self.name)
+        
