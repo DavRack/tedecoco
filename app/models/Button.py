@@ -5,4 +5,4 @@ class Button:
         self.style = style
 
     def getHtml(self):
-        return '<button class="{0}">{1}</button>'.format(self.style, self.title)
+        return '<button class="{0}" >{1}</button>'.format(self.style, self.title)

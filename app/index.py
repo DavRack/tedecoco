@@ -77,7 +77,7 @@ def upload():
                                 else:
                                     submitBtn = Button(1, i[1], "btn btn-custom k-font")
                             elif ("Textbox" in i[0]):
-                                aux.append(Input("id","col-12 mb-3","input","input",i[1], i[1],i[1]))
+                                aux.append(Input(i[3],"col-12 mb-3","input","input",i[1], i[1],i[3]))
                             elif ("Radio" in i[0]):
                                 aux.append(Input("id","col-12 mb-3","radio","radio",i[1], i[1], i[1]))
                             elif ("Desplegable" in i[0]):
