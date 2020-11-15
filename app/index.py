@@ -46,40 +46,35 @@ def upload():
         if request.files:
             if(request.files['diagram'].filename != ""):
                 xmlFile = request.files['diagram']
-                #path_on_cloud = "file.bpmn"
-                #fairbeis.getStorage().child(path_on_cloud).put(xmlFile)
-                #title = str(xmlFile.filename)
-                #contenido = '''
-                #    <h1 class="k-font w-100 text-center">{0}</h1>
-                #'''.format(str(xmlFile.filename))
 
                 title = xmlFile.filename
 
                 if re.findall(r"\.{1}bpmn$", title):
                     # En esta área se interpreta el XML
-                    #texto = Parce.returnTextAnnotation(xmlFile)
-                    #text = Parce.returnTextAnnotation(xmlFile)
-                    #asociation = Parce.returnAssociation(xmlFile)
+
                     dic=Parce.returnActivityElements(xmlFile)
-                    #print(dic)
-                    #lanes = Parce.returnLanes(xmlFile) 
                     items = []
+                    ids=[]
                     contenido = ""
 
                     for d in dic:
                         aux = []
                         for i in dic[d]:
-                            #formXML = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", [inputXML, tooltip], submitBtn, ".bpmn")
+                            
                             if ("Boton" in i[0]):
-                                #aux.append(Button(1,i[1],"btn btn-custom k-font"))
                                 if (len(dic[d])==1):
                                     aux.append(Button(1,i[1],"btn btn-custom k-font"))
                                 else:
                                     submitBtn = Button(1, i[1], "btn btn-custom k-font")
+                                    
                             elif ("Textbox" in i[0]):
-                                aux.append(Input(i[3],"col-12 mb-3","input","input",i[1], i[1],i[3]))
+                                id = i[3][0]
+                                ids.append({"id":id, "name":i[1], "type":"text"})
+                                aux.append(Input(id,"col-12 mb-3","text","form-control",'', i[1],id))
                             elif ("Radio" in i[0]):
-                                aux.append(Input("id","col-12 mb-3","radio","radio",i[1], i[1], i[1]))
+                                id = i[3][0]
+                                ids.append({"id":id, "name":i[1], "type":"radio"})
+                                aux.append(Input(id,"col-12 mb-3","radio","form-control",'', i[1],id))
                             elif ("Desplegable" in i[0]):
                                 l = list(i[1].split(","))
                                 aux.append(Dropdown(1,l[0],l))
@@ -93,39 +88,11 @@ def upload():
                             for i in aux:
                                 items.append(i)
                         else:
-                            #submitBtn = Button(1,"enviar", "btn btn-custom k-font")
-                            formu = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", aux, submitBtn, ".*")
+                            formu = Form("w-100 row m-0 justify-content-center","/read", "POST", "multipart/form-data", aux, submitBtn, ".*")
                             items.append(formu)
-
-                    '''for d in dic:
-                        for i in dic[d]:
-                            #formXML = Form("w-100 row m-0 justify-content-center","/upload", "POST", "multipart/form-data", [inputXML, tooltip], submitBtn, ".bpmn")
-                            if ("Boton" in i[0]):
-                                items.append(Button(1,i[1],"btn btn-custom k-font"))
-                            elif ("Textbox" in i[0]):
-                                items.append(Input("id","col-12 mb-3","input","input",i[1], i[1],i[1]))
-                            elif ("Radio" in i[0]):
-                                items.append(Input("id","col-12 mb-3","radio","radio",i[1], i[1], i[1]))
-                            elif ("Desplegable" in i[0]):
-                                l = list(i[1].split(","))
-                                items.append(Dropdown(1,l[0],l))
-                            elif ("Titulo" in i[0]):
-                                items.append(DivTitle(i[1],"mx-auto h1 k-font"))
-                            elif ("Navbar" in i[0]):
-                                navbar= (Navbar("fas fa-paw",i[1])).getHtml()
-                            else:
-                                print(3)
-                    '''
 
                     for item in items:
                         contenido += item.getHtml() + '\n'
-
-                    #contenido = ""
-                    
-                    #for te in dic:
-                    #    contenido += "<h1 class='k-font w-100 text-center'>"+str(dic[te])+"</h1>\n"
-                    #for lane in lanes:
-                    #    contenido += "<h1 class='k-font w-100 text-center'>"+Parce.returnTextNode(lane)+"</h1>\n"
                     
                     return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
                 else:
@@ -162,7 +129,13 @@ def upload():
                 '''
 
                 return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)   
-            
+
+
+@app.route('/read', methods=["POST"])
+def read():    
+    if request.method == "POST":
+        print(request.form['Name']) 
+        return render_template("home.html")   
 
 @app.route('/')
 def home():
