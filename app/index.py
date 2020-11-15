@@ -152,6 +152,15 @@ def upload():
 
 @app.route('/read', methods=["POST"])
 def read():
+    contenido = ""
+    datosGuardados = []
+    navbar = '''
+        <nav class="navbar navbar-expand-md nav-background">
+            <div class="container"> 
+                <a class="navbar-brand mx-auto k-font" href="/"><i class="fas fa-pizza-slice fa-fw"></i>HOME</a> 
+            </div>
+        </nav>
+    '''
     if request.method == "POST":
 
         f = open("../tedecoco/app/files/names.txt", "r")
@@ -171,11 +180,20 @@ def read():
             print(n)
             print(request.form[n['id']])
             print(n['name'] )
+            datosGuardados.append(n['name'] + " : " + request.form[n['id']] + "\n")
             txt.write(n['name'] + " : " + request.form[n['id']] + "\n")
-
+        txt.write('\n')
         txt.close()
-        return render_template("home.html", title=title, nav=navbar, foot=footer)
+        lista = []
+        lista.append('''<h1 class="text-center w-100 mb-3">La información se ha guardado correctamente en un archivo de texto</h1>''')
+        for i in datosGuardados:
+            lista.append("<p>" + i + "</p>")
 
+        for item in lista:
+                        contenido += item + '\n'
+
+        title = "Exito"
+        return render_template("home.html", title=title, nav=navbar, page=contenido, foot=footer)
 
 @app.route('/')
 def home():
