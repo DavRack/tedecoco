@@ -157,12 +157,19 @@ def read():
         a = f.read()
         f.close()
         names = json.loads(a)
+        #print(names)
+        title = names[0]
+        #print(title)
+        del names[0]
+        print(names)
+        
 
-        title = names.pop()
-
-        txt = open('./files/info.txt', 'a+')
-
+        txt = open('./files/info'+str(title['name'])+'.txt', 'a+')
+        
         for n in names:
+            print(n)
+            print(request.form[n['id']])
+            print(n['name'] )
             txt.write(n['name'] + " : " + request.form[n['id']] + "\n")
 
         txt.close()
