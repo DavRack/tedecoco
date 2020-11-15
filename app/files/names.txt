@@ -1,0 +1,1 @@
+[{"id": 0, "name": "IMC.bpmn"}, {"id": "Name", "name": "Nombre", "type": "text"}, {"id": "Height", "name": "Estatura (cm)", "type": "text"}, {"id": "Weight", "name": "Peso (kg)", "type": "text"}]

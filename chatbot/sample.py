@@ -6,9 +6,8 @@ app = Flask(__name__)  # nombre del modulo o el paquete
 spa_bot = ChatBot(
     "Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
 trainer = ChatterBotCorpusTrainer(spa_bot)
-trainer.train("chatterbot.corpus.spanish")
 trainer.train("datos/datos.yml")
-
+trainer.train("chatterbot.corpus.spanish")
 
 @app.route('/')
 def index():

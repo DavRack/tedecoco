@@ -1,0 +1,9 @@
+Nombre : Jean
+Estatura (cm) : 180
+Peso (kg) : 60
+Nombre : Ana
+Estatura (cm) : 160
+Peso (kg) : 170
+Nombre : Isa
+Estatura (cm) : 164
+Peso (kg) : 55
