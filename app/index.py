@@ -7,8 +7,10 @@ from models.DivTitle import DivTitle
 from models.Dropdown import Dropdown
 from models.Form import Form
 from models.Input import Input
+from models.Radio import Radio
 from models.Tooltip import Tooltip as TP
 import re
+import os
 
 navbar = ""
 footer = '''
@@ -83,11 +85,10 @@ def upload():
                                     Input(id, "col-12 mb-3", "text", "form-control", '', i[1], id))
                             elif ("Radio" in i[0]):
                                 id = i[3][0]
-                                
                                 ids.append(
                                     {"id": id, "name": i[1], "type": "radio"})
                                 aux.append(
-                                    Input(id, "col-12 mb-3", "radio", "form-control", '', i[1], id))
+                                    Radio(id, "col-12 mb-3", "radio", "form-control", '', i[1], id, i[1].split(" ")[0]))
                             elif ("Desplegable" in i[0]):
                                 l = list(i[1].split(","))
                                 aux.append(Dropdown(1, l[0], l))
@@ -108,7 +109,7 @@ def upload():
                     for item in items:
                         contenido += item.getHtml() + '\n'
 
-                    f = open("./files/names.txt", "w+")
+                    f = open("../tedecoco/app/files/names.txt", "w+")
                     f.writelines(json.dumps(ids))
                     f.close()
 
@@ -153,7 +154,7 @@ def upload():
 def read():
     if request.method == "POST":
 
-        f = open("./files/names.txt", "r")
+        f = open("../tedecoco/app/files/names.txt", "r")
         a = f.read()
         f.close()
         names = json.loads(a)
@@ -164,7 +165,7 @@ def read():
         print(names)
         
 
-        txt = open('./files/info'+str(title['name'])+'.txt', 'a+')
+        txt = open('../tedecoco/app/files/names.txt'+str(title['name'])+'.txt', 'a+')
         
         for n in names:
             print(n)

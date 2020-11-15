@@ -1,0 +1,3 @@
+Nombre : Aristizabal
+Estatura (cm) : 150
+Peso (kg) : 50
