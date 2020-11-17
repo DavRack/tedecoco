@@ -1,0 +1,6 @@
+Ingrese el nombre del gato : Ana
+Ingrese su nombre completo : ricardo jose garzon arias
+Desea algo : on
+Ingrese el nombre del gato : Ana
+Ingrese su nombre completo : 
+Desea algo : on
