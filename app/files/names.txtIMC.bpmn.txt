@@ -1,0 +1,6 @@
+Nombre : Aristizabal
+Estatura (cm) : 150
+Peso (kg) : 50
+Nombre : Pepe
+Estatura (cm) : 185
+Peso (kg) : 85
