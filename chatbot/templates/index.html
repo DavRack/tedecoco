@@ -15,10 +15,10 @@
     <div class="container">
         <div class="card" style="border-radius: 20px; margin-top: 10vh;">
             <div class="card-body">
-                <p class="text-center col-12 title">PYBOT</p>
+                <p class="text-center col-12 title">R2-D2</p>
                 <div id="chatbox" class="col-12">
                     <p class="botText">
-                        <span class="text-primary">Pybot: </span><span>Hola! Soy tu Chatterbot.</span>
+                        <span class="text-primary">R2-D2: </span><span>Hola Humano, he regresado del universo de star wars, ¿en que puedo ayudarte?.</span>
                     </p>
                 </div>
                 <div id="userInput" class="row justify-content-center">
@@ -38,7 +38,7 @@
             $("#chatbox").append(userHtml);
             document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
             $.get("/get", { msg: rawText }).done(function (datos) {
-                var botHtml = '<p class="botText"><span class="text-primary">Pybot: </span><span>' + datos + '</span></p>';
+                var botHtml = '<p class="botText"><span class="text-primary">R2-D2: </span><p>' + datos + '</p></p>';
                 $("#chatbox").append(botHtml);
                 document.getElementById('userInput').scrollIntoView({ block: 'start', behaviour: 'smooth' });
             });
