@@ -7,14 +7,17 @@
 
 
 
-
-
-
 NOTAS DE CONSISTENCIA:
-1) NO SE PERMITE ANIDAR VENTANAS ENTRE SI 
-2) NO SE PERMITEN INSERTAR IMAGENES EN LA APLICACION
-3) SI VA HACER UN FORMULARIO SOLO SE PUEDE HACERLO EN UN LANE
-4) NO SE PUEDEN DEJAR LANES VACIOS
+1. No se permite anidar ventanas entre si
+2. No se permiten insertar imágenes en la aplicación
+3. Si va hacer un formulario solo se puede hacerlo en un lane
+4. Solo se puede hacer un formulario por ventana
+5. No se pueden dejar lanes vacíos
+6. El diagrama se debe realizar en el orden que desea que se muestre
+7. Si va a modificar el diagrama debe hacerlo desde el código xml o rehacer las conexiones entre las partes del diagrama para evitar errores en la vista
+8. Todos los textbox y radiobutton se deben almacenar, por ende, todos deben tener una conexión con el símbolo de storage
+9. No se debe repetir el nombre del símbolo de storage.
+10. Si se crea un formulario este debe contener obligatoriamente un boton al final del mismo, este actuara como boton de submit, si no lo tiene no podra guardar informacion
 
 
 

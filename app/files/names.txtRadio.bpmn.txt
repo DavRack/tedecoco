@@ -1,5 +1,0 @@
-Ingrese el nombre del gato : Killua
-Ingrese su nombre completo : Isabela
-Desea algo : Desea
-indesea algo : Desea
-

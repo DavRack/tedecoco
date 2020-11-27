@@ -1,6 +1,0 @@
-Nombre : Ricardo Jose Garzon Arias
-Estatura (cm) : 170
-Peso (kg) : 70
-Nombre : Isabela Lujuan
-Estatura (cm) : 165
-Peso (kg) : 68
