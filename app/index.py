@@ -174,7 +174,7 @@ def read():
         print(names)
         
 
-        txt = open('../tedecoco/app/files/names.txt'+str(title['name'])+'.txt', 'a+')
+        txt = open('../tedecoco/app/files/'+str(title['name'])+'.txt', 'a+')
         
         for n in names:
             print(n)

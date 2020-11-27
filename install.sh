@@ -1,3 +1,3 @@
 #!/bin/bash
-# instalar flask
-pip install flask
+python3 app/index.py
+sleep 2

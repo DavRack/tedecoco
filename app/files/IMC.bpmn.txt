@@ -1,0 +1,4 @@
+Nombre : d
+Estatura (cm) : a
+Peso (kg) : 15
+
