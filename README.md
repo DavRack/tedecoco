@@ -16,6 +16,7 @@
 1. [Descripción general de funcionamiento](#Descripción-general-de-funcionamiento)
 1. [Reglas](#reglas)
 1. [Descripción de símbolos](#descripción-de-simbolos)
+1. [Ejecución](#Ejecución)
 1. [Ejemplos](#ejemplos)
 
 ## Tecnologías
@@ -133,8 +134,43 @@ un widget puede ser:
 + Titulo
 
 
-Nota: Los tipos de los widgets son Case sentive.
+Nota: Los tipos de los widgets son "Case sensitive".
 Nota 2: Una aplicación siempre debe tener un navbar al inicio.
+
+## Ejecución
+
+Para ejecutar el programa necesitará:
+
++ Un navegador WEB
++ Python 3.xx
++ Flask (librería de python)
+
+Puede instalar Flask en la mayoría de distribuciones Linux usando el siguiente comando:
+
+```
+sudo -H pip3 install flask
+```
+
+Puede instalar flask en windows usando este comando:
+```
+pip install flask
+```
+
+Para iniciar la aplicación ejecute desde una terminal (en Windows) el siguiente comando:
+```{}
+python app/index.py
+```
+En Linux puede usar este comando:
+```{}
+./run
+```
+
+Luego de iniciar la aplicación ingrese la dirección **localhost:5000** en un navegador WEB.
+Una vez esté abierta la venta use el botón browse para agregar un diagrama y el botón enviar para generar la aplicación.
+
+<p align="center" width="50%">
+    <img width="80%" src="img/app.png"> 
+</p>
 
 ## Ejemplos
 Se mostrarán varios ejemplos, primero el diagrama y luego la aplicación generada.
