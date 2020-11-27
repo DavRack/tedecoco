@@ -74,6 +74,7 @@ Para ver ejemplos más completos puede revisar la sección  [Ejemplos](#ejemplos
 7. Si va a modificar el diagrama debe hacerlo desde el código xml o rehacer las conexiones entre las partes del diagrama para evitar errores en la vista
 8. Todos los textbox y radiobutton se deben almacenar, por ende, todos deben tener una conexión con el símbolo de storage
 9. No se debe repetir el nombre del símbolo de storage.
+10. Si se crea un formulario este debe contener obligatoriamente un boton al final del mismo, este actuara como boton de submit, si no lo tiene no podra guardar informacion
 
 ## Descripción de símbolos
 
@@ -142,8 +143,9 @@ Nota 2: Una aplicación siempre debe tener un navbar al inicio.
 Para ejecutar el programa necesitará:
 
 + Un navegador WEB
-+ Python 3.xx
++ Python 3.7
 + Flask (librería de python)
++ Chatterbot (librería de python)
 
 Puede instalar Flask en la mayoría de distribuciones Linux usando el siguiente comando:
 
@@ -165,8 +167,17 @@ En Linux puede usar este comando:
 ./run
 ```
 
+Para ejecutar el chatbot ejecute desde una terminal (en Windows) el siguiente comando:
+```{}
+python chatbot/samples.py
+```
+
 Luego de iniciar la aplicación ingrese la dirección **localhost:5000** en un navegador WEB.
 Una vez esté abierta la venta use el botón browse para agregar un diagrama y el botón enviar para generar la aplicación.
+
+Una vez generada la aplicación web basada en el diagrama bpmn enviado, si la aplicación contiene un formulario podra guardar la informacion del mismo en un archivo .txt el cual se encontrara ubicado en /app/files, una vez alli podra ubicar el archivo con el mismo nombre del diagrama utilizado para generar la pagina, por ejemplo IMC.bpmn.txt
+
+Si rellena la informacion de un formulario en varias ocasiones este se agregara al mismo archivo.
 
 <p align="center" width="50%">
     <img width="80%" src="img/app.png"> 
